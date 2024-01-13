@@ -31,10 +31,10 @@ const config: Config = {
             700: '#181C2A',
             800: '#0E1116',
           },
-
-          'gradient-vertical': `linear-gradient(180deg, #7FD1CC 0%, #9694F5 100%)`,
-          'gradient-horizontal': `linear-gradient(90deg, #7FD1CC 0%, #9694F5 100%)`,
         },
+      },
+      gridTemplateColumns: {
+        app: 'minmax(232px, 598px) 1fr',
       },
     },
   },
