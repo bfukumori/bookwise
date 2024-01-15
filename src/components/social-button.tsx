@@ -1,8 +1,8 @@
-import { ComponentProps } from 'react';
+import { ComponentProps } from "react";
 
-import { SocialIcon } from './social-icon';
+import { SocialIcon } from "./social-icon";
 
-type SocialButtonProps = ComponentProps<'button'> & {
+type SocialButtonProps = ComponentProps<"button"> & {
   text: string;
   providerName: SocialIcon;
 };
@@ -14,11 +14,11 @@ export function SocialButton({
 }: SocialButtonProps) {
   return (
     <button
-      className="flex items-center gap-5 px-5 py-6 bg-app-gray-600 rounded-lg hover:bg-app-gray-500"
+      className="flex items-center gap-5 rounded-lg bg-app-gray-600 px-5 py-6 text-lg font-bold text-app-gray-200 hover:bg-app-gray-500"
       {...props}
     >
       <SocialIcon variant={providerName} />
-      <span className="text-app-gray-200 font-bold text-lg">{text}</span>
+      {text}
     </button>
   );
 }
