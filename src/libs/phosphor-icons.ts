@@ -5,6 +5,7 @@ import {
   SignOut,
   SignIn,
   CaretRight,
+  Star,
 } from "@phosphor-icons/react";
 
-export { ChartLineUp, Binoculars, SignOut, SignIn, CaretRight };
+export { ChartLineUp, Binoculars, SignOut, SignIn, CaretRight, Star };
