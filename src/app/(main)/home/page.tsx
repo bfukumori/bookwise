@@ -53,7 +53,10 @@ export default function Home() {
           </div>
         </section>
         <aside>
-          <TitleSection title="Livros populares" linkTo="/explore" />
+          <TitleSection
+            title="Livros populares"
+            linkTo="/explore?category=all"
+          />
           <div className="flex flex-col gap-3">
             <CardRoot>
               <CardContent>

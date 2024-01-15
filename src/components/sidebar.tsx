@@ -9,7 +9,11 @@ export function Sidebar() {
       <Logo variant="sm" />
       <nav className="mt-16 flex flex-col gap-4">
         <Navlink icon={ChartLineUp} text="Início" path="/home" />
-        <Navlink icon={Binoculars} text="Explorar" path="/explore" />
+        <Navlink
+          icon={Binoculars}
+          text="Explorar"
+          path="/explore?category=all"
+        />
       </nav>
       <LoginButton />
     </aside>
