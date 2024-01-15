@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ReactNode } from "react";
+import { CardContentTitle } from "./card-content-title";
 
 type CardHeaderProps = {
   title: string;
@@ -26,10 +27,7 @@ export function CardHeader({
             className="rounded-full"
           />
         </div>
-        <div>
-          <h2 className="text-app-gray-100">{title}</h2>
-          <span className="text-sm text-app-gray-400">{subtitle}</span>
-        </div>
+        <CardContentTitle title={title} subtitle={subtitle} />
       </div>
       {children}
     </header>

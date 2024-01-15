@@ -3,13 +3,13 @@ import Image from "next/image";
 import { CardRoot } from "@/components/card/card-root";
 import { CardContent } from "@/components/card/card-content";
 import { CardHeader } from "@/components/card/card-header";
+import { CardContentTitle } from "@/components/card/card-content-title";
+import { TitleSection } from "@/components/title-section";
 
 export default function Home() {
   return (
     <section>
-      <h2 className="mb-4 text-sm text-app-gray-100">
-        Avaliações mais recentes
-      </h2>
+      <TitleSection title=" Avaliações mais recentes" />
       <div className="flex flex-col gap-3">
         <CardRoot>
           <CardHeader
@@ -25,8 +25,7 @@ export default function Home() {
               alt="O Hobbit"
             />
             <div>
-              <h2 className="font-bold text-app-gray-100">O Hobbit</h2>
-              <span className="text-sm text-app-gray-400">J.R.R. Tolkien</span>
+              <CardContentTitle title="O Hobbit" subtitle="J.R.R. Tolkien" />
               <p className="line-clamp-3 text-sm text-app-gray-300">
                 Semper et sapien proin vitae nisi. Feugiat neque integer donec
                 et aenean posuere amet ultrices. Cras fermentum id pulvinar
