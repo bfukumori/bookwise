@@ -21,8 +21,9 @@
     "baseUrl": "src/",
     "paths": {
       "@/components/*": ["components/*"],
-      "@/utils": ["utils/*"],
-      "@/hooks": ["hooks/*"]
+      "@/utils/*": ["utils/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/libs/*": ["libs/*"]
     }
   },
   "include": [
