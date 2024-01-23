@@ -7,6 +7,7 @@ import {
   CaretRight,
   Star,
   MagnifyingGlass,
+  X,
 } from "@phosphor-icons/react";
 
 export {
@@ -17,4 +18,5 @@ export {
   CaretRight,
   Star,
   MagnifyingGlass,
+  X,
 };

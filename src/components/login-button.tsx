@@ -1,5 +1,5 @@
 "use client";
-import { SignIn } from "libs/phosphor-icons";
+import { SignIn } from "@/libs/phosphor-icons";
 
 export function LoginButton() {
   async function handleLogin() {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import logo from "../../public/assets/app-logo.svg";
+import logo from "../../public/images/app-logo.svg";
 
 type LogoProps = {
   variant?: "sm" | "md";
