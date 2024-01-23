@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import githubLogo from "../../public/assets/github-icon.svg";
-import googleLogo from "../../public/assets/google-icon.svg";
-import defaultLogo from "../../public/assets/rocket-launch.svg";
+import githubLogo from "../../public/images/github-icon.svg";
+import googleLogo from "../../public/images/google-icon.svg";
+import defaultLogo from "../../public/images/rocket-launch.svg";
 
 export type SocialIcon = "google" | "github" | "guest";
 
