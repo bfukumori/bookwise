@@ -12,7 +12,6 @@ import { ListItem } from "@/components/list-item";
 import { SectionTitle } from "@/components/section-title";
 import { CardHeader } from "@/components/card/card-header";
 import { prisma } from "@/libs/prisma";
-import TESTE from "../../../../../public/images/books/14-habitos-de-desenvolvedores-altamente-produtivos.png";
 
 dayjs.extend(relativeTime);
 
@@ -69,7 +68,12 @@ export default async function BookDetails({
     <div className="flex flex-col gap-10">
       <CardRoot className="gap-8 bg-app-gray-700">
         <CardContent>
-          <Image src={TESTE} width={171} height={242} alt={book.name} />
+          <Image
+            src={book.cover_url}
+            width={171}
+            height={242}
+            alt={book.name}
+          />
           <div className="flex flex-col justify-between">
             <CardContentTitle title={book.name} subtitle={book.author} />
             <RatingStarsWrapper readOnly bookId={book.id} showRatingsCount />

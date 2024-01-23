@@ -12,6 +12,7 @@ import { PageTitle } from "@/components/page-title";
 import { CaretRight, ChartLineUp } from "@/libs/phosphor-icons";
 import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
 import { prisma } from "@/libs/prisma";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -75,7 +76,7 @@ export default async function Home() {
           <SectionTitle title=" Avaliações mais recentes" />
           <div className="flex flex-col gap-3">
             {mostRecentReviews.map((review) => (
-              <CardRoot key={review.id} className="gap-8 bg-app-gray-600">
+              <CardRoot key={review.id} className="gap-8 bg-app-gray-700">
                 <CardHeader
                   title={review.user.name}
                   subtitle={dayjs(review.created_at).fromNow()}
@@ -85,7 +86,7 @@ export default async function Home() {
                 </CardHeader>
                 <CardContent>
                   <Image
-                    src={`/${review.book.cover_url}`}
+                    src={review.book.cover_url}
                     width={108}
                     height={152}
                     alt={review.book.name}
@@ -116,26 +117,25 @@ export default async function Home() {
           />
           <div className="flex flex-col gap-3">
             {mostPopularBooks.map((item) => (
-              <CardRoot
-                key={item.book_id}
-                className="cursor-pointer gap-8 bg-app-gray-700 hover:border-app-gray-600"
-              >
-                <CardContent>
-                  <Image
-                    src={`/${item.book.cover_url}`}
-                    width={64}
-                    height={94}
-                    alt={item.book.name}
-                  />
-                  <div className="flex flex-col justify-between">
-                    <CardContentTitle
-                      title={item.book.name}
-                      subtitle={item.book.author}
+              <Link key={item.id} href={`/book/${item.book_id}`}>
+                <CardRoot className="cursor-pointer gap-8 bg-app-gray-700 hover:border-app-gray-600">
+                  <CardContent>
+                    <Image
+                      src={item.book.cover_url}
+                      width={64}
+                      height={94}
+                      alt={item.book.name}
                     />
-                    <RatingStars readOnly ratingsAvg={item.rate} />
-                  </div>
-                </CardContent>
-              </CardRoot>
+                    <div className="flex flex-col justify-between">
+                      <CardContentTitle
+                        title={item.book.name}
+                        subtitle={item.book.author}
+                      />
+                      <RatingStars readOnly ratingsAvg={item.rate} />
+                    </div>
+                  </CardContent>
+                </CardRoot>
+              </Link>
             ))}
           </div>
         </aside>

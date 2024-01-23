@@ -115,7 +115,7 @@ export default async function Explore({
             <CardRoot className="h-full cursor-pointer gap-8 bg-app-gray-700 hover:border-app-gray-600">
               <CardContent>
                 <Image
-                  src={`/${book.cover_url}`}
+                  src={book.cover_url}
                   width={102}
                   height={152}
                   alt={book.name}
