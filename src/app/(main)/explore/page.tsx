@@ -96,7 +96,7 @@ export default async function Explore({
   const categories = await getCategories();
 
   return (
-    <>
+    <div className="animate-fadeIn">
       <div className="flex items-center justify-between">
         <PageTitle title="Explorar" icon={Binoculars} />
         <div className="mb-10 w-full max-w-[433px]">
@@ -111,7 +111,7 @@ export default async function Explore({
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {books.map((book) => (
-          <Link key={book.id} href={`/book/${book.id}`}>
+          <Link key={book.id} href={`/book/${book.id}`} scroll={false}>
             <CardRoot className="h-full cursor-pointer gap-8 bg-app-gray-700 hover:border-app-gray-600">
               <CardContent>
                 <Image
@@ -129,7 +129,6 @@ export default async function Explore({
           </Link>
         ))}
       </div>
-      <dialog></dialog>
-    </>
+    </div>
   );
 }

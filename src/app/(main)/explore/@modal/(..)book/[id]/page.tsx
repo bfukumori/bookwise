@@ -1,18 +1,19 @@
 import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { BookOpen, BookmarkSimple } from "@phosphor-icons/react/dist/ssr";
 
 import { CardContent } from "@/components/card/card-content";
-import { CardRoot } from "@/components/card/card-root";
 import { CardContentTitle } from "@/components/card/card-content-title";
-import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
 import { CardFooter } from "@/components/card/card-footer";
-import { ListItem } from "@/components/list-item";
-import { SectionTitle } from "@/components/section-title";
 import { CardHeader } from "@/components/card/card-header";
+import { CardRoot } from "@/components/card/card-root";
+import { ListItem } from "@/components/list-item";
+import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
+import { SectionTitle } from "@/components/section-title";
 import { prisma } from "@/libs/prisma";
-import { RatingCTA } from "app/(main)/explore/@modal/(..)book/[id]/rating-cta";
+import { Modal } from "./modal";
+import { BookOpen, BookmarkSimple } from "@/libs/phosphor-icons";
+import { RatingCTA } from "./rating-cta";
 
 dayjs.extend(relativeTime);
 
@@ -54,7 +55,7 @@ async function getRatings(bookId: string) {
   });
 }
 
-export default async function BookDetails({
+export default async function BookDetailsModal({
   params,
 }: {
   params: { id: string };
@@ -66,7 +67,7 @@ export default async function BookDetails({
   const ratings = await getRatings(params.id);
 
   return (
-    <div className="flex flex-col gap-10">
+    <Modal>
       <CardRoot className="gap-8 bg-app-gray-700">
         <CardContent>
           <Image
@@ -117,6 +118,6 @@ export default async function BookDetails({
           ))}
         </div>
       </section>
-    </div>
+    </Modal>
   );
 }

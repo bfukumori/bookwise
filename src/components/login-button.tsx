@@ -8,7 +8,7 @@ export function LoginButton() {
 
   return (
     <button
-      className="mt-auto flex items-center gap-3 rounded px-1 py-2 font-bold text-app-gray-200 hover:bg-gray-200/[.04]"
+      className="mt-auto flex items-center justify-center gap-3 rounded px-1 py-2 font-bold text-app-gray-200 hover:bg-gray-200/[.04]"
       onClick={handleLogin}
     >
       Fazer login

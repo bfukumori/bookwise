@@ -12,7 +12,6 @@ import { PageTitle } from "@/components/page-title";
 import { CaretRight, ChartLineUp } from "@/libs/phosphor-icons";
 import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
 import { prisma } from "@/libs/prisma";
-import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -69,7 +68,7 @@ export default async function Home() {
   const mostPopularBooks = await getMostPopularBooks();
 
   return (
-    <div>
+    <div className="animate-fadeIn">
       <PageTitle title="Início" icon={ChartLineUp} />
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-home">
         <section>
@@ -117,25 +116,23 @@ export default async function Home() {
           />
           <div className="flex flex-col gap-3">
             {mostPopularBooks.map((item) => (
-              <Link key={item.id} href={`/book/${item.book_id}`}>
-                <CardRoot className="cursor-pointer gap-8 bg-app-gray-700 hover:border-app-gray-600">
-                  <CardContent>
-                    <Image
-                      src={item.book.cover_url}
-                      width={64}
-                      height={94}
-                      alt={item.book.name}
+              <CardRoot key={item.id} className="gap-8 bg-app-gray-700">
+                <CardContent>
+                  <Image
+                    src={item.book.cover_url}
+                    width={64}
+                    height={94}
+                    alt={item.book.name}
+                  />
+                  <div className="flex flex-col justify-between">
+                    <CardContentTitle
+                      title={item.book.name}
+                      subtitle={item.book.author}
                     />
-                    <div className="flex flex-col justify-between">
-                      <CardContentTitle
-                        title={item.book.name}
-                        subtitle={item.book.author}
-                      />
-                      <RatingStars readOnly ratingsAvg={item.rate} />
-                    </div>
-                  </CardContent>
-                </CardRoot>
-              </Link>
+                    <RatingStars readOnly ratingsAvg={item.rate} />
+                  </div>
+                </CardContent>
+              </CardRoot>
             ))}
           </div>
         </aside>

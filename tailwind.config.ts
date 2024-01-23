@@ -45,6 +45,15 @@ const config: Config = {
       padding: {
         13: "52px",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease-out forwards",
+      },
     },
   },
   plugins: [],

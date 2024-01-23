@@ -8,6 +8,8 @@ import {
   Star,
   MagnifyingGlass,
   X,
+  BookmarkSimple,
+  BookOpen,
 } from "@phosphor-icons/react";
 
 export {
@@ -19,4 +21,6 @@ export {
   Star,
   MagnifyingGlass,
   X,
+  BookmarkSimple,
+  BookOpen,
 };
