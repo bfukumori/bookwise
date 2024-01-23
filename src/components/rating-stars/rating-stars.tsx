@@ -1,15 +1,22 @@
 "use client";
-import { Star } from "libs/phosphor-icons";
+import { Star } from "@/libs/phosphor-icons";
 import { useState } from "react";
 
 type RatingStarsProps = {
   readOnly?: boolean;
-  initialState?: number;
+  ratingsAvg: number;
 };
 
-export function RatingStars({ readOnly, initialState = 0 }: RatingStarsProps) {
-  const [rating, setRating] = useState(initialState);
+export function RatingStars({ ratingsAvg, readOnly }: RatingStarsProps) {
+  const [rating, setRating] = useState(ratingsAvg);
   const [ratingHoverState, setRatingHoverState] = useState(0);
+
+  function getWeight(starIndex: number) {
+    if (readOnly) {
+      return starIndex <= (ratingHoverState || rating) ? "fill" : "light";
+    }
+    return starIndex < (ratingHoverState || rating) ? "fill" : "light";
+  }
 
   function handleOnClick(starIndex: number) {
     if (readOnly) {
@@ -37,14 +44,12 @@ export function RatingStars({ readOnly, initialState = 0 }: RatingStarsProps) {
       {[1, 2, 3, 4, 5].map((starIndex) => (
         <div
           key={starIndex}
-          className={`${readOnly ? "cursor-default" : "cursor-pointer"} text-app-purple-100`}
+          className={`${readOnly ? "pointer-events-none cursor-none" : "cursor-pointer"} text-app-purple-100`}
           onMouseEnter={() => handleOnMouseEnter(starIndex)}
           onMouseLeave={handleOnMouseLeave}
           onClick={() => handleOnClick(starIndex)}
         >
-          <Star
-            weight={starIndex < (ratingHoverState || rating) ? "fill" : "light"}
-          />
+          <Star weight={getWeight(starIndex)} />
         </div>
       ))}
     </div>
