@@ -1,8 +1,16 @@
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
 import { Logo } from "@/components/logo";
 import { SocialButton } from "@/components/social-button";
-import Link from "next/link";
 
-export default function Login() {
+export default async function Login() {
+  const session = await getServerSession();
+
+  if (session?.user) {
+    redirect("/home");
+  }
+
   return (
     <div className="m-auto grid h-full max-w-8xl grid-cols-login gap-5 p-5 max-[675px]:grid-cols-1">
       <aside className="grid place-content-center overflow-clip rounded-lg bg-[url('/images/login-background.png')] bg-cover bg-no-repeat">
@@ -21,12 +29,7 @@ export default function Login() {
           <div className="flex w-full flex-col gap-4">
             <SocialButton text="Entrar com Google" providerName="google" />
             <SocialButton text="Entrar com GitHub" providerName="github" />
-            <Link href="/home">
-              <SocialButton
-                text="Acessar como visitante"
-                providerName="guest"
-              />
-            </Link>
+            <SocialButton text="Acessar como visitante" providerName="guest" />
           </div>
         </div>
       </main>

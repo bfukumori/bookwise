@@ -5,22 +5,36 @@ import { useState } from "react";
 type RatingStarsProps = {
   readOnly?: boolean;
   ratingsAvg: number;
+  starsSize?: number;
+  controlledRatingState?: number;
+  setControlledRatingState?: (value: number) => void;
 };
 
-export function RatingStars({ ratingsAvg, readOnly }: RatingStarsProps) {
-  const [rating, setRating] = useState(ratingsAvg);
+export function RatingStars({
+  ratingsAvg,
+  readOnly,
+  controlledRatingState,
+  setControlledRatingState,
+  starsSize = 20,
+}: RatingStarsProps) {
+  const [rating, setRating] = useState(controlledRatingState ?? ratingsAvg);
   const [ratingHoverState, setRatingHoverState] = useState(0);
 
   function getWeight(starIndex: number) {
     if (readOnly) {
       return starIndex <= (ratingHoverState || rating) ? "fill" : "light";
     }
+
     return starIndex < (ratingHoverState || rating) ? "fill" : "light";
   }
 
   function handleOnClick(starIndex: number) {
     if (readOnly) {
       return;
+    }
+
+    if (controlledRatingState && setControlledRatingState) {
+      setControlledRatingState(starIndex + 1);
     }
     setRating(starIndex + 1);
   }
@@ -49,7 +63,7 @@ export function RatingStars({ ratingsAvg, readOnly }: RatingStarsProps) {
           onMouseLeave={handleOnMouseLeave}
           onClick={() => handleOnClick(starIndex)}
         >
-          <Star weight={getWeight(starIndex)} />
+          <Star weight={getWeight(starIndex)} size={starsSize} />
         </div>
       ))}
     </div>

@@ -1,9 +1,14 @@
+import { getServerSession } from "next-auth";
+
+import { Binoculars, ChartLineUp, User } from "@/libs/phosphor-icons";
 import { Navlink } from "./nav-link";
 import { Logo } from "./logo";
-import { Binoculars, ChartLineUp } from "@/libs/phosphor-icons";
 import { LoginButton } from "./login-button";
 
-export function Sidebar() {
+export async function Sidebar() {
+  const session = await getServerSession();
+  const isLoggedIn = session?.user;
+
   return (
     <aside className="flex max-h-[880px] flex-col overflow-clip rounded-lg bg-[url('/images/sidebar-background.png')] bg-cover bg-no-repeat px-12 py-10">
       <Logo variant="sm" />
@@ -14,6 +19,7 @@ export function Sidebar() {
           text="Explorar"
           path="/explore?category=Tudo"
         />
+        {isLoggedIn && <Navlink icon={User} text="Perfil" path="/profile" />}
       </nav>
       <LoginButton />
     </aside>

@@ -1,7 +1,8 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 
-import "./globals.css";
+import NextAuthProvider from "@/components/next-auth-provider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`h-dvh bg-app-gray-800 ${nunito.className}`}>
-        {children}
+        <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
   );

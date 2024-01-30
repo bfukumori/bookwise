@@ -9,10 +9,10 @@ import { CardContentTitle } from "@/components/card/card-content-title";
 import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
 import { CardFooter } from "@/components/card/card-footer";
 import { ListItem } from "@/components/list-item";
-import { SectionTitle } from "@/components/section-title";
 import { CardHeader } from "@/components/card/card-header";
 import { prisma } from "@/libs/prisma";
 import { RatingCTA } from "app/(main)/explore/@modal/(..)book/[id]/rating-cta";
+import { getServerSession } from "next-auth";
 
 dayjs.extend(relativeTime);
 
@@ -64,6 +64,8 @@ export default async function BookDetails({
     .map((item) => item.category.name)
     .join(", ");
   const ratings = await getRatings(params.id);
+  const session = await getServerSession();
+  const isAuthenticated = session?.user;
 
   return (
     <div className="flex flex-col gap-10">
@@ -94,10 +96,7 @@ export default async function BookDetails({
         </CardFooter>
       </CardRoot>
       <section>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm text-app-gray-100">Avaliações</h2>
-          <RatingCTA />
-        </div>
+        <RatingCTA />
         <div className="flex flex-col gap-3">
           {ratings.map((rating) => (
             <CardRoot key={rating.id} className="gap-5 bg-app-gray-700">

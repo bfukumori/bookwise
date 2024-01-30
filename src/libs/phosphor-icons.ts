@@ -10,6 +10,10 @@ import {
   X,
   BookmarkSimple,
   BookOpen,
+  User,
+  Books,
+  UserList,
+  Check,
 } from "@phosphor-icons/react";
 
 export {
@@ -23,4 +27,8 @@ export {
   X,
   BookmarkSimple,
   BookOpen,
+  User,
+  Books,
+  UserList,
+  Check,
 };

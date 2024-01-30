@@ -9,7 +9,6 @@ import { CardHeader } from "@/components/card/card-header";
 import { CardRoot } from "@/components/card/card-root";
 import { ListItem } from "@/components/list-item";
 import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
-import { SectionTitle } from "@/components/section-title";
 import { prisma } from "@/libs/prisma";
 import { Modal } from "./modal";
 import { BookOpen, BookmarkSimple } from "@/libs/phosphor-icons";
@@ -95,10 +94,7 @@ export default async function BookDetailsModal({
         </CardFooter>
       </CardRoot>
       <section>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm text-app-gray-100">Avaliações</h2>
-          <RatingCTA />
-        </div>
+        <RatingCTA />
         <div className="flex flex-col gap-3">
           {ratings.map((rating) => (
             <CardRoot key={rating.id} className="gap-5 bg-app-gray-700">
