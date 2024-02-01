@@ -46,7 +46,7 @@ async function getRatings(bookId: string) {
     include: {
       user: {
         select: {
-          avatar_url: true,
+          image: true,
           name: true,
         },
       },
@@ -103,7 +103,7 @@ export default async function BookDetails({
               <CardHeader
                 title={rating.user.name}
                 subtitle={dayjs(rating.created_at).fromNow()}
-                imgUrl={rating.user.avatar_url}
+                imgUrl={rating.user.image}
               >
                 <RatingStarsWrapper readOnly bookId={rating.book_id} />
               </CardHeader>

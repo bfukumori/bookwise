@@ -24,7 +24,7 @@ async function getMostRecentReviews() {
     include: {
       user: {
         select: {
-          avatar_url: true,
+          image: true,
           name: true,
         },
       },
@@ -79,7 +79,7 @@ export default async function Home() {
                 <CardHeader
                   title={review.user.name}
                   subtitle={dayjs(review.created_at).fromNow()}
-                  imgUrl={review.user.avatar_url}
+                  imgUrl={review.user.image}
                 >
                   <RatingStarsWrapper readOnly bookId={review.book_id} />
                 </CardHeader>

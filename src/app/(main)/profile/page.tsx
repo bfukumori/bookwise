@@ -1,36 +1,26 @@
-import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
-import { CardRoot } from "@/components/card/card-root";
-import { CardContent } from "@/components/card/card-content";
-import { CardHeader } from "@/components/card/card-header";
-import { CardContentTitle } from "@/components/card/card-content-title";
-import { SectionTitle } from "@/components/section-title";
-import { RatingStars } from "@/components/rating-stars/rating-stars";
 import { PageTitle } from "@/components/page-title";
 import {
   BookOpen,
   BookmarkSimple,
   Books,
-  CaretRight,
-  ChartLineUp,
   User,
   UserList,
 } from "@/libs/phosphor-icons";
-import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
-import { prisma } from "@/libs/prisma";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { SearchRatedBookForm } from "@/components/search-rated-book-form";
 import { Avatar } from "@/components/avatar";
 import { ListItem } from "@/components/list-item";
+import { getServerSession } from "next-auth";
+import { authOptions } from "app/api/auth/[...nextauth]/auth-options";
 
 dayjs.extend(relativeTime);
 
 export default async function Profile() {
-  const session = await getServerSession();
-
+  const session = await getServerSession(authOptions);
+  console.log(session);
   if (!session?.user) {
     redirect("/home");
   }
