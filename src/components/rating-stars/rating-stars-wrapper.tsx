@@ -1,10 +1,11 @@
 import { prisma } from "@/libs/prisma";
-import { RatingStars } from "./rating-stars";
+import { RatingStarsReadOnly } from "./rating-start-readonly";
 
 type RatingStarsWrapperProps = {
   bookId: string;
-  readOnly?: boolean;
   showRatingsCount?: boolean;
+  rate?: number;
+  size?: number;
 };
 
 async function getRatings(book_id: string) {
@@ -26,8 +27,9 @@ async function getRatings(book_id: string) {
 
 export async function RatingStarsWrapper({
   bookId,
-  readOnly,
   showRatingsCount,
+  rate,
+  size,
 }: RatingStarsWrapperProps) {
   const ratings = await getRatings(bookId);
   const ratingsAvg = ratings._avg.rate;
@@ -39,9 +41,9 @@ export async function RatingStarsWrapper({
 
   return (
     <div>
-      <RatingStars
-        ratingsAvg={ratingsAvg ? Math.ceil(ratingsAvg) : 0}
-        readOnly={readOnly}
+      <RatingStarsReadOnly
+        size={size}
+        ratingsAvg={rate ?? ((ratingsAvg && Math.ceil(ratingsAvg)) || 0)}
       />
       {showRatingsCount && (
         <span className="mt-1 block text-sm text-app-gray-400">

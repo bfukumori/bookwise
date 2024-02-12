@@ -13,6 +13,8 @@ import { prisma } from "@/libs/prisma";
 import { Modal } from "./modal";
 import { BookOpen, BookmarkSimple } from "@/libs/phosphor-icons";
 import { RatingCTA } from "./rating-cta";
+import { getServerSession } from "next-auth";
+import { authOptions } from "app/api/auth/[...nextauth]/auth-options";
 
 dayjs.extend(relativeTime);
 
@@ -64,6 +66,7 @@ export default async function BookDetailsModal({
     .map((item) => item.category.name)
     .join(", ");
   const ratings = await getRatings(params.id);
+  const session = await getServerSession(authOptions);
 
   return (
     <Modal>
@@ -77,7 +80,7 @@ export default async function BookDetailsModal({
           />
           <div className="flex flex-col justify-between">
             <CardContentTitle title={book.name} subtitle={book.author} />
-            <RatingStarsWrapper readOnly bookId={book.id} showRatingsCount />
+            <RatingStarsWrapper bookId={book.id} showRatingsCount size={20} />
           </div>
         </CardContent>
         <CardFooter>
@@ -97,13 +100,19 @@ export default async function BookDetailsModal({
         <RatingCTA />
         <div className="flex flex-col gap-3">
           {ratings.map((rating) => (
-            <CardRoot key={rating.id} className="gap-5 bg-app-gray-700">
+            <CardRoot
+              key={rating.id}
+              className={`gap-5 ${rating.user_id === session?.user.id ? "bg-app-gray-600" : "bg-app-gray-700"}`}
+            >
               <CardHeader
-                title={rating.user.name}
+                title={rating.user.name ?? "Anônimo"}
                 subtitle={dayjs(rating.created_at).fromNow()}
                 imgUrl={rating.user.image}
               >
-                <RatingStarsWrapper readOnly bookId={rating.book_id} />
+                <RatingStarsWrapper
+                  bookId={rating.book_id}
+                  rate={rating.rate}
+                />
               </CardHeader>
               <CardContent>
                 <p className="line-clamp-3 text-sm text-app-gray-300">

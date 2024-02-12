@@ -11,7 +11,7 @@ export function LoginButton() {
 
   async function handleLogin() {
     try {
-      await signIn("github");
+      await signIn("google");
     } catch (error) {
       console.error(error);
     }

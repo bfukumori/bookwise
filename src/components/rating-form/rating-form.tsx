@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Avatar } from "./avatar";
-import { RatingStars } from "./rating-stars/rating-stars";
+import { Avatar } from "../avatar";
+import { RatingStars } from "../rating-stars/rating-stars";
 import { Check, X } from "@/libs/phosphor-icons";
+import { useSession } from "next-auth/react";
+import { createRating } from "./actions";
+import { useParams } from "next/navigation";
 
 type RatingFormProps = {
   handleClose: () => void;
@@ -12,20 +15,45 @@ type RatingFormProps = {
 export function RatingForm({ handleClose }: RatingFormProps) {
   const [rating, setRating] = useState(0);
   const [ratingText, setRatingText] = useState("");
+  const session = useSession();
   const currentLettersCount = ratingText.length;
+  const { id: bookId } = useParams();
 
   function handleRating(value: number) {
     setRating(value);
   }
 
+  async function handleSubmit() {
+    const result = await createRating({
+      rate: rating,
+      description: ratingText,
+      book_id: bookId as string,
+      user_id: session.data?.user?.id as string,
+    });
+
+    if (!result) {
+      alert("You've already rated this book.");
+    }
+  }
+
   return (
-    <form className="flex flex-col gap-2 rounded-lg bg-app-gray-700 p-6">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-2 rounded-lg bg-app-gray-700 p-6"
+    >
       <div>
         <div className="flex justify-between">
-          <Avatar size={40} srcUrl="" className="size-10 min-w-10" />
+          <div className="flex items-center gap-2">
+            <Avatar
+              size={40}
+              srcUrl={session.data?.user?.image ?? ""}
+              className="size-10 min-w-10"
+            />
+            <span className="text-app-gray-100">
+              {session.data?.user?.name}
+            </span>
+          </div>
           <RatingStars
-            ratingsAvg={0}
-            starsSize={24}
             controlledRatingState={rating}
             setControlledRatingState={handleRating}
           />
@@ -53,7 +81,10 @@ export function RatingForm({ handleClose }: RatingFormProps) {
         >
           <X size={24} />
         </button>
-        <button className="rounded bg-app-gray-600 p-2 text-app-green-100 hover:bg-app-gray-500">
+        <button
+          type="submit"
+          className="rounded bg-app-gray-600 p-2 text-app-green-100 hover:bg-app-gray-500"
+        >
           <Check size={24} />
         </button>
       </div>

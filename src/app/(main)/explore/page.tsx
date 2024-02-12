@@ -122,7 +122,7 @@ export default async function Explore({
                 />
                 <div className="flex flex-col justify-between">
                   <CardContentTitle title={book.name} subtitle={book.author} />
-                  <RatingStarsWrapper readOnly bookId={book.id} />
+                  <RatingStarsWrapper bookId={book.id} />
                 </div>
               </CardContent>
             </CardRoot>

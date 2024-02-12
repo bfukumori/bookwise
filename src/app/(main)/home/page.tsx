@@ -7,11 +7,14 @@ import { CardContent } from "@/components/card/card-content";
 import { CardHeader } from "@/components/card/card-header";
 import { CardContentTitle } from "@/components/card/card-content-title";
 import { SectionTitle } from "@/components/section-title";
-import { RatingStars } from "@/components/rating-stars/rating-stars";
 import { PageTitle } from "@/components/page-title";
 import { CaretRight, ChartLineUp } from "@/libs/phosphor-icons";
 import { RatingStarsWrapper } from "@/components/rating-stars/rating-stars-wrapper";
 import { prisma } from "@/libs/prisma";
+import { SeeMore } from "@/components/see-more";
+import { RatingStarsReadOnly } from "@/components/rating-stars/rating-start-readonly";
+import { getServerSession } from "next-auth";
+import { authOptions } from "app/api/auth/[...nextauth]/auth-options";
 
 dayjs.extend(relativeTime);
 
@@ -63,25 +66,92 @@ async function getMostPopularBooks() {
   });
 }
 
+async function getMostRecentRead(userId: string) {
+  return await prisma.rating.findMany({
+    where: {
+      user_id: userId,
+    },
+    orderBy: {
+      created_at: "desc",
+    },
+    take: 1,
+    include: {
+      book: {
+        select: {
+          author: true,
+          cover_url: true,
+          name: true,
+          summary: true,
+        },
+      },
+    },
+  });
+}
+
 export default async function Home() {
+  const session = await getServerSession(authOptions);
   const mostRecentReviews = await getMostRecentReviews();
   const mostPopularBooks = await getMostPopularBooks();
+  const mostRecentRead = await getMostRecentRead(session?.user.id as string);
 
   return (
     <div className="animate-fadeIn">
       <PageTitle title="Início" icon={ChartLineUp} />
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-home">
         <section>
-          <SectionTitle title=" Avaliações mais recentes" />
+          {session?.user.id && mostRecentRead.length > 0 && (
+            <div className="mb-10">
+              <SectionTitle
+                title="Sua última leitura"
+                linkTo="/profile"
+                linkTitle="Ver todos"
+                icon={CaretRight}
+              />
+              <div className="flex flex-col gap-3">
+                {mostRecentRead.map((review) => (
+                  <CardRoot key={review.id} className="gap-8 bg-app-gray-600">
+                    <CardContent>
+                      <Image
+                        src={review.book.cover_url}
+                        width={108}
+                        height={152}
+                        alt={review.book.name}
+                      />
+                      <div>
+                        <div className="mb-4 flex items-center justify-between">
+                          <span className="text-sm text-app-gray-300">
+                            {dayjs(review.created_at).fromNow()}
+                          </span>
+                          <RatingStarsWrapper
+                            bookId={review.book_id}
+                            rate={review.rate}
+                          />
+                        </div>
+                        <CardContentTitle
+                          title={review.book.name}
+                          subtitle={review.book.author}
+                        />
+                        <SeeMore review={review.book.summary} />
+                      </div>
+                    </CardContent>
+                  </CardRoot>
+                ))}
+              </div>
+            </div>
+          )}
+          <SectionTitle title="Avaliações mais recentes" />
           <div className="flex flex-col gap-3">
             {mostRecentReviews.map((review) => (
               <CardRoot key={review.id} className="gap-8 bg-app-gray-700">
                 <CardHeader
-                  title={review.user.name}
+                  title={review.user.name ?? ""}
                   subtitle={dayjs(review.created_at).fromNow()}
                   imgUrl={review.user.image}
                 >
-                  <RatingStarsWrapper readOnly bookId={review.book_id} />
+                  <RatingStarsWrapper
+                    bookId={review.book_id}
+                    rate={review.rate}
+                  />
                 </CardHeader>
                 <CardContent>
                   <Image
@@ -95,12 +165,7 @@ export default async function Home() {
                       title={review.book.name}
                       subtitle={review.book.author}
                     />
-                    <p className="line-clamp-3 text-sm text-app-gray-300">
-                      {review.description}
-                    </p>
-                    <span className="cursor-pointer font-bold text-app-purple-100 hover:text-app-purple-100/60">
-                      ver mais
-                    </span>
+                    <SeeMore review={review.description} />
                   </div>
                 </CardContent>
               </CardRoot>
@@ -129,7 +194,7 @@ export default async function Home() {
                       title={item.book.name}
                       subtitle={item.book.author}
                     />
-                    <RatingStars readOnly ratingsAvg={item.rate} />
+                    <RatingStarsReadOnly ratingsAvg={item.rate} />
                   </div>
                 </CardContent>
               </CardRoot>

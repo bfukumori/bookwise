@@ -5,7 +5,7 @@ import { useState } from "react";
 import { SocialButton } from "@/components/social-button";
 import { X } from "@/libs/phosphor-icons";
 import { useSession } from "next-auth/react";
-import { RatingForm } from "@/components/rating-form";
+import { RatingForm } from "@/components/rating-form/rating-form";
 
 export function RatingCTA() {
   const [open, setOpen] = useState(false);
