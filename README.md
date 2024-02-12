@@ -23,7 +23,7 @@
 </p>
 
 <div align="center"> 
-	<img alt="ignite-call" title="#bookwise" src="./.github/banner.png" />
+	<img alt="bookwise" title="#bookwise" src="./.github/banner.png" />
 </div>
 
 ## About
